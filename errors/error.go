@@ -1,12 +1,10 @@
 package errors
 
+import "errors"
+
 type errorWithCode struct {
     error
     code int32
-}
-
-func (err errorWithCode) Error() string {
-    return err.error.Error()
 }
 
 func NewCodeError(code int32) error {
@@ -15,24 +13,39 @@ func NewCodeError(code int32) error {
     }
 }
 
+func NewCodeErrorWithMsg(code int32, msg string) error {
+    return errorWithCode{
+        error: errors.New(msg),
+        code:  code,
+    }
+}
+
+func (err errorWithCode) Error() string {
+    if err.error != nil {
+        return err.error.Error()
+    }
+
+    return GetErrorMsgByCode(err.code)
+}
+
 func GetErrorCode(err error) int32 {
     if codeError, ok := err.(errorWithCode); ok {
         return codeError.code
     }
-    return unknownCode
+    return codeUnknown
 }
 
 func GetErrorMsg(err error) string {
     if codeError, ok := err.(errorWithCode); ok {
-        return getMsg(codeError.code)
+        return codeError.Error()
     }
-    return unknownMsg
+    return code2msg[codeUnknown]
 }
 
-func getMsg(errCode int32) string {
-    msg, ok := msgMap[errCode]
+func GetErrorMsgByCode(code int32) string {
+    msg, ok := code2msg[code]
     if !ok {
-        return unknownMsg
+        return code2msg[codeUnknown]
     }
     return msg
 }

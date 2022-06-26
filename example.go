@@ -2,6 +2,7 @@ package main
 
 import (
     "github.com/Hui4401/gopkg/errors"
+    "github.com/Hui4401/gopkg/logs"
 )
 
 type errorCode = int32
@@ -17,9 +18,14 @@ var code2msg = map[errorCode]string{
 }
 
 func main() {
+    defer func() {
+        logs.Sync()
+    }()
+
     errors.SetUnknownCode(CodeUnknownError)
-    errors.SetCode2Msg(code2msg)
+    errors.SetUnknownMsg(code2msg[CodeUnknownError])
+    errors.SetCode2MsgMap(code2msg)
     err := errors.NewCodeError(CodeParamError)
-    println(errors.GetErrorCode(err))
-    println(errors.GetErrorMsg(err))
+
+    logs.InfoKvs("error code", errors.GetErrorCode(err), "error msg", errors.GetErrorMsg(err))
 }
