@@ -4,22 +4,28 @@ import (
 	"log"
 	"os"
 
-	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
 
+type logMode int
+
+const (
+	LogModeDevelopment logMode = 1
+	LogModeProduct     logMode = 2
+)
+
 var logger *zap.SugaredLogger
 
-func init() {
+// Init logPath为空则不同时输出到文件
+func Init(logMode logMode, logPath string) {
 	var zapConfig zap.Config
 
-	if gin.Mode() == gin.DebugMode || gin.Mode() == gin.TestMode {
+	switch logMode {
+	case LogModeDevelopment:
 		zapConfig = zap.NewDevelopmentConfig()
-	} else if gin.Mode() == gin.ReleaseMode {
+	case LogModeProduct:
 		zapConfig = zap.NewProductionConfig()
-	} else {
-		log.Panicf("get gin mode error, mode: %s", gin.Mode())
 	}
 
 	zapConfig.Encoding = "console"
@@ -27,10 +33,9 @@ func init() {
 	zapConfig.EncoderConfig.EncodeTime = zapcore.TimeEncoderOfLayout("2006-01-02 15:04:05.000")
 
 	// 同时输出到文件
-	logPath := os.Getenv("LOG_PATH")
 	if logPath != "" {
 		if _, err := os.Stat(logPath); os.IsNotExist(err) {
-			if err = os.MkdirAll(logPath, 0666); err != nil {
+			if err = os.MkdirAll(logPath, os.ModePerm); err != nil {
 				log.Panicf("creat log path error: %s", err.Error())
 			}
 		}
@@ -43,7 +48,7 @@ func init() {
 		zap.AddStacktrace(zap.PanicLevel),
 	)
 	if err != nil {
-		log.Panicf("init zap logger error: %s", err.Error())
+		log.Panicf("Init zap logger error: %s", err.Error())
 	}
 	logger = _logger.Sugar()
 }

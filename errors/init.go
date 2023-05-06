@@ -1,25 +1,24 @@
 package errors
 
 var (
-    codeUnknown int32
-    msgUnknown  string
+	code2msg    map[int32]string
+	codeUnknown int32
+	msgUnknown  string
 )
 
-var code2msg map[int32]string
-
 func init() {
-    codeUnknown = -1
-    msgUnknown = "unknown error"
+	codeUnknown = -1
+	msgUnknown = "unknown error"
 }
 
 func SetUnknownCode(code int32) {
-    codeUnknown = code
+	codeUnknown = code
 }
 
 func SetUnknownMsg(msg string) {
-    msgUnknown = msg
+	msgUnknown = msg
 }
 
 func SetCode2MsgMap(msgMap map[int32]string) {
-    code2msg = msgMap
+	code2msg = msgMap
 }
