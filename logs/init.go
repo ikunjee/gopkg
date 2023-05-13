@@ -52,3 +52,7 @@ func Init(logMode logMode, logPath string) {
 	}
 	logger = _logger.Sugar()
 }
+
+func Sync() {
+	_ = logger.Sync()
+}

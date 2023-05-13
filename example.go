@@ -31,6 +31,12 @@ func main() {
 	errors.SetUnknownMsg(code2msg[CodeUnknownError])
 	errors.SetCode2MsgMap(code2msg)
 	err := errors.NewCodeError(CodeParamError)
+	logs.InfoKvs("error code", errors.GetErrorCode(err), "error msg", errors.GetErrorMsg(err))
 
-	logs.CtxInfoKvs(ctx, "error code", errors.GetErrorCode(err), "error msg", errors.GetErrorMsg(err))
+	ctx = logs.CtxAddKVs(ctx, "func", "main", "hello", "world")
+	exampleLogFunc(ctx)
+}
+
+func exampleLogFunc(ctx context.Context) {
+	logs.CtxInfoKvs(ctx, "func", "exampleLogFunc")
 }
