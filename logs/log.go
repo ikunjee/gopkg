@@ -1,21 +1,21 @@
 package logs
 
-func DebugKvs(kvs ...interface{}) {
-	logger.Debugw("", kvs...)
+func DebugKvs(msg string, kvs ...any) {
+	logger.Debugw(msg, kvs...)
 }
 
-func InfoKvs(kvs ...interface{}) {
-	logger.Infow("", kvs...)
+func InfoKvs(msg string, kvs ...any) {
+	logger.Infow(msg, kvs...)
 }
 
-func WarnKvs(kvs ...interface{}) {
-	logger.Warnw("", kvs...)
+func WarnKvs(msg string, kvs ...any) {
+	logger.Warnw(msg, kvs...)
 }
 
-func ErrorKvs(kvs ...interface{}) {
-	logger.Errorw("", kvs...)
+func ErrorKvs(msg string, kvs ...any) {
+	logger.Errorw(msg, kvs...)
 }
 
-func PanicKvs(kvs ...interface{}) {
-	logger.Panicw("", kvs...)
+func PanicKvs(msg string, kvs ...any) {
+	logger.Panicw(msg, kvs...)
 }

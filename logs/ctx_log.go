@@ -9,11 +9,11 @@ const (
 )
 
 type structCtxKVs struct {
-	kvs []interface{}
+	kvs []any
 	pre *structCtxKVs
 }
 
-func CtxAddKVs(ctx context.Context, kvs ...interface{}) context.Context {
+func CtxAddKVs(ctx context.Context, kvs ...any) context.Context {
 	if len(kvs) == 0 || (len(kvs)&1 == 1) {
 		return ctx
 	}
@@ -39,7 +39,7 @@ func getCurrentKVsStruct(ctx context.Context) *structCtxKVs {
 	return nil
 }
 
-func GetAllKVs(ctx context.Context) []interface{} {
+func GetAllKVs(ctx context.Context) []any {
 	if ctx == nil {
 		return nil
 	}
@@ -48,22 +48,22 @@ func GetAllKVs(ctx context.Context) []interface{} {
 		return nil
 	}
 
-	var result []interface{}
+	var result []any
 	recursiveAllKVs(&result, kVsStruct, 0)
 
 	return result
 }
 
-func recursiveAllKVs(result *[]interface{}, kvsStruct *structCtxKVs, total int) {
+func recursiveAllKVs(result *[]any, kvsStruct *structCtxKVs, total int) {
 	if kvsStruct == nil {
-		*result = make([]interface{}, 0, total)
+		*result = make([]any, 0, total)
 		return
 	}
 	recursiveAllKVs(result, kvsStruct.pre, total+len(kvsStruct.kvs))
 	*result = append(*result, kvsStruct.kvs...)
 }
 
-func makeKVs(ctx context.Context, kvs []interface{}) []interface{} {
+func makeKVs(ctx context.Context, kvs []any) []any {
 	kvList := GetAllKVs(ctx)
 	if kvList != nil {
 		kvList = append(kvList, kvs...)
@@ -74,22 +74,22 @@ func makeKVs(ctx context.Context, kvs []interface{}) []interface{} {
 	return kvList
 }
 
-func CtxDebugKvs(ctx context.Context, kvs ...interface{}) {
-	logger.Debugw("", makeKVs(ctx, kvs)...)
+func CtxDebugKvs(ctx context.Context, msg string, kvs ...any) {
+	logger.Debugw(msg, makeKVs(ctx, kvs)...)
 }
 
-func CtxInfoKvs(ctx context.Context, kvs ...interface{}) {
-	logger.Infow("", makeKVs(ctx, kvs)...)
+func CtxInfoKvs(ctx context.Context, msg string, kvs ...any) {
+	logger.Infow(msg, makeKVs(ctx, kvs)...)
 }
 
-func CtxWarnKvs(ctx context.Context, kvs ...interface{}) {
-	logger.Warnw("", makeKVs(ctx, kvs)...)
+func CtxWarnKvs(ctx context.Context, msg string, kvs ...any) {
+	logger.Warnw(msg, makeKVs(ctx, kvs)...)
 }
 
-func CtxErrorKvs(ctx context.Context, kvs ...interface{}) {
-	logger.Errorw("", makeKVs(ctx, kvs)...)
+func CtxErrorKvs(ctx context.Context, msg string, kvs ...any) {
+	logger.Errorw(msg, makeKVs(ctx, kvs)...)
 }
 
-func CtxPanicKvs(ctx context.Context, kvs ...interface{}) {
-	logger.Panicw("", makeKVs(ctx, kvs)...)
+func CtxPanicKvs(ctx context.Context, msg string, kvs ...any) {
+	logger.Panicw(msg, makeKVs(ctx, kvs)...)
 }
