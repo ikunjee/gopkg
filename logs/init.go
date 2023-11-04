@@ -18,7 +18,7 @@ const (
 var logger *zap.SugaredLogger
 
 // Init logPath为空则不同时输出到文件
-func Init(logMode logMode, logPath string) {
+func Init(logMode logMode, logPath string, enableColor bool) {
 	var zapConfig zap.Config
 
 	switch logMode {
@@ -29,7 +29,10 @@ func Init(logMode logMode, logPath string) {
 	}
 
 	zapConfig.Encoding = "console"
-	zapConfig.EncoderConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder
+	zapConfig.EncoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder
+	if enableColor {
+		zapConfig.EncoderConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder
+	}
 	zapConfig.EncoderConfig.EncodeTime = zapcore.TimeEncoderOfLayout("2006-01-02 15:04:05.000")
 
 	// 同时输出到文件
