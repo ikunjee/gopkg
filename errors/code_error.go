@@ -9,7 +9,7 @@ type errorWithCode struct {
 	code int32
 }
 
-func WithCode(err error, code int32) error {
+func NewErrorWithCode(err error, code int32) error {
 	return errorWithCode{
 		error: err,
 		code:  code,
