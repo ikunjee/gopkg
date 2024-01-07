@@ -9,7 +9,7 @@ var (
 	UnMarshalString = sonic.UnmarshalString
 )
 
-func String(a any) string {
+func ToString(a any) string {
 	res, _ := sonic.MarshalString(a)
 	return res
 }
