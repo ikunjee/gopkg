@@ -1,4 +1,4 @@
-package errors
+package errorx
 
 var (
 	code2msg    map[int32]string

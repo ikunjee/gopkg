@@ -1,4 +1,4 @@
-package logs
+package logx
 
 func DebugKvs(msg string, kvs ...any) {
 	logger.Debugw(msg, kvs...)

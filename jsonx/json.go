@@ -1,4 +1,4 @@
-package jsons
+package jsonx
 
 import (
 	"github.com/bytedance/sonic"
