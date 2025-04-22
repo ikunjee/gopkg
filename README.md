@@ -1,21 +1,15 @@
 # gopkg
 
-一些 Golang 开发时常用组件的封装
+一些常用的 Golang 组件封装，底层基于标准库或流行的第三方实现，提供简洁易用的 API 方便使用
 
-## Installation
+## 下载
 
-`go get github.com/Hui4401/gopkg`
+`go get github.com/ikunjee/gopkg`
 
-## 组件
-
-使用示例见 [example.go](./example.go)
-
-### errors
-
-在原始 error 的基础上添加了 code 属性，便于服务开发时的错误码传递
-
-### logs
-
-基于 go.uber.org/zap 封装的日志组件
-
-- 方便的为 context 添加 log kv 信息，在打印日志时输出调用链上所有自定义添加的日志
+## 组件列表
+| 组件名称 | 功能描述 | 详细说明                       |
+| --- | --- |----------------------------|
+| asyncx | 异步任务 | [link](./asyncx/README.md) |
+| jsonx | json 序列化、反序列化 | [link](./jsonx/README.md)  |
+| logx | 日志打印 | [link](./logx/README.md)   |
+| errorx | 错误处理 | [link](./errorx/README.md) |
