@@ -165,7 +165,7 @@ func main() {
 > 使用选项模式（option）实现用不同的配置控制 json 行为， 优先级：临时配置 > 全局配置 > 默认配置
 
 ### 可选options
-- **func WithJsonLibType(jsonLibType)**：切换底层 json 库，默认值：sonic
+- **WithJsonLibType(jsonLibType)**：切换底层 json 库，默认值：sonic
 - **WithEscapeHTML(bool)**：marshal 时是否转义 HTML 字符，默认 false
 - **WithUseNumber(bool)**：unmarshal 数字时是否转成 number 类型，默认值：false
 
