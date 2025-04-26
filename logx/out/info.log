@@ -1,4 +1,0 @@
-2025-04-26 20:27:17.691	[34mINFO[0m	gopkg/main.go:9	hello info
-2025-04-26 20:27:17.691	[31mERROR[0m	gopkg/main.go:10	hello error
-2025-04-26 20:30:10.069	[34mINFO[0m	gopkg/main.go:10	hello info
-2025-04-26 20:30:10.069	[31mERROR[0m	gopkg/main.go:11	hello error
