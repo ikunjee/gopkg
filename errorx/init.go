@@ -1,24 +1,44 @@
 package errorx
 
+import "sync"
+
 var (
-	code2msg    map[int32]string
-	codeUnknown int32
-	msgUnknown  string
+	codeUnknown int64  = -1
+	msgUnknown  string = "unknown error"
+	codeMsgMap         = map[int64]string{
+		codeUnknown: msgUnknown,
+	}
+
+	codeUnknownLock = sync.RWMutex{}
+	msgUnknownLock  = sync.RWMutex{}
+	codeMsgMapLock  = sync.RWMutex{}
 )
 
-func init() {
-	codeUnknown = -1
-	msgUnknown = "unknown error"
-}
+func SetUnknownCode(code int64) {
+	codeUnknownLock.Lock()
+	codeMsgMapLock.Lock()
+	defer codeUnknownLock.Unlock()
+	defer codeMsgMapLock.Unlock()
 
-func SetUnknownCode(code int32) {
 	codeUnknown = code
+	codeMsgMap[codeUnknown] = msgUnknown
 }
 
 func SetUnknownMsg(msg string) {
+	codeUnknownLock.Lock()
+	codeMsgMapLock.Lock()
+	defer codeUnknownLock.Unlock()
+	defer codeMsgMapLock.Unlock()
+
 	msgUnknown = msg
+	codeMsgMap[codeUnknown] = msgUnknown
 }
 
-func SetCode2MsgMap(msgMap map[int32]string) {
-	code2msg = msgMap
+func SetCodeMsgMap(newCodeMsgMap map[int64]string) {
+	codeMsgMapLock.Lock()
+	defer codeMsgMapLock.Unlock()
+
+	for code, msg := range newCodeMsgMap {
+		codeMsgMap[code] = msg
+	}
 }

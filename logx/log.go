@@ -1,21 +1,41 @@
 package logx
 
+func Debug(template string, args ...any) {
+	defaultLogger.Debugf(template, args...)
+}
+
+func Info(template string, args ...any) {
+	defaultLogger.Infof(template, args...)
+}
+
+func Warn(template string, args ...any) {
+	defaultLogger.Warnf(template, args...)
+}
+
+func Error(template string, args ...any) {
+	defaultLogger.Errorf(template, args...)
+}
+
+func Panic(template string, args ...any) {
+	defaultLogger.Panicf(template, args...)
+}
+
 func DebugKvs(msg string, kvs ...any) {
-	logger.Debugw(msg, kvs...)
+	defaultLogger.Debugw(msg, kvs...)
 }
 
 func InfoKvs(msg string, kvs ...any) {
-	logger.Infow(msg, kvs...)
+	defaultLogger.Infow(msg, kvs...)
 }
 
 func WarnKvs(msg string, kvs ...any) {
-	logger.Warnw(msg, kvs...)
+	defaultLogger.Warnw(msg, kvs...)
 }
 
 func ErrorKvs(msg string, kvs ...any) {
-	logger.Errorw(msg, kvs...)
+	defaultLogger.Errorw(msg, kvs...)
 }
 
 func PanicKvs(msg string, kvs ...any) {
-	logger.Panicw(msg, kvs...)
+	defaultLogger.Panicw(msg, kvs...)
 }

@@ -5,28 +5,8 @@ import (
 )
 
 type errorWithCode struct {
-	error
-	code int32
-}
-
-func NewErrorWithCode(err error, code int32) error {
-	return errorWithCode{
-		error: err,
-		code:  code,
-	}
-}
-
-func NewCodeError(code int32) error {
-	return errorWithCode{
-		code: code,
-	}
-}
-
-func NewCodeErrorWithMsg(code int32, msg string) error {
-	return errorWithCode{
-		error: errors.New(msg),
-		code:  code,
-	}
+	error error
+	code  int64
 }
 
 func (err errorWithCode) Error() string {
@@ -37,7 +17,27 @@ func (err errorWithCode) Error() string {
 	return GetErrorMsgByCode(err.code)
 }
 
-func GetErrorCode(err error) int32 {
+func NewCodeWrapError(err error, code int64) error {
+	return errorWithCode{
+		error: err,
+		code:  code,
+	}
+}
+
+func NewCodeError(code int64) error {
+	return errorWithCode{
+		code: code,
+	}
+}
+
+func NewCodeMsgError(code int64, msg string) error {
+	return errorWithCode{
+		error: errors.New(msg),
+		code:  code,
+	}
+}
+
+func GetErrorCode(err error) int64 {
 	if codeError, ok := err.(errorWithCode); ok {
 		return codeError.code
 	}
@@ -45,13 +45,10 @@ func GetErrorCode(err error) int32 {
 	return codeUnknown
 }
 
-func GetErrorMsgByCode(code int32) string {
-	if code2msg == nil {
-		return msgUnknown
-	}
-	msg, ok := code2msg[code]
+func GetErrorMsgByCode(code int64) string {
+	msg, ok := codeMsgMap[code]
 	if !ok {
-		return code2msg[codeUnknown]
+		return codeMsgMap[codeUnknown]
 	}
 
 	return msg

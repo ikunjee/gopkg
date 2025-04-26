@@ -7,9 +7,9 @@
 `go get github.com/ikunjee/gopkg`
 
 ## 组件列表
-| 组件名称 | 功能描述 | 详细说明                       |
-| --- | --- |----------------------------|
-| asyncx | 异步任务 | [link](./asyncx/README.md) |
-| jsonx | json 序列化、反序列化 | [link](./jsonx/README.md)  |
-| logx | 日志打印 | [link](./logx/README.md)   |
-| errorx | 错误处理 | [link](./errorx/README.md) |
+| 组件名称 | 功能描述           | 详细说明                       |
+| --- |----------------|----------------------------|
+| asyncx | 异步任务工具         | [link](./asyncx/README.md) |
+| jsonx | json 工具        | [link](./jsonx/README.md)  |
+| logx | 带 ctx 上下文的日志打印 | [link](./logx/README.md)   |
+| errorx | 带 code 的错误处理   | [link](./errorx/README.md) |
