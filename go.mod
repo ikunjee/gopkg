@@ -5,7 +5,7 @@ go 1.21
 require (
 	github.com/bytedance/sonic v1.10.2
 	github.com/smartystreets/goconvey v1.8.1
-	go.uber.org/zap v1.26.0
+	go.uber.org/zap v1.27.0
 )
 
 require (
